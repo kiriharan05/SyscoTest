@@ -8,8 +8,11 @@ target 'SyscoTest' do
   # Pods for SyscoTest
   pod 'SDWebImage'
   pod 'ObjectMapper'
-  pod 'AlamofireObjectMapper'
+#  pod 'RxSwift',    '~> 4.0'
+#  pod 'RxCocoa',    '~> 4.0'
 
+  pod 'AlamofireObjectMapper'
+  
   target 'SyscoTestTests' do
     inherit! :search_paths
     # Pods for testing
