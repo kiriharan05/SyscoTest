@@ -48,9 +48,5 @@ class BaseService: NSObject {
                 failure(error as NSError?)
             }
         })
-        
     }
-    
 }
-
-

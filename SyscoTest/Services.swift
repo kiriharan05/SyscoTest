@@ -10,26 +10,15 @@ import Alamofire
 import ObjectMapper
 
 class Services: BaseService {
-    
-    func getPlanetData(success: @escaping ((_ planetData: PlanetsApiModel?) -> Void), faliure: (@escaping(_ error: Error?) -> Void)){
-        let url = ("\(Hosts.baseUrl.rawValue)/planets").addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-
-        var request: AlamofireRequestModal = AlamofireRequestModal()
-        request.method = .get
-        request.path = url!
-        request.encoding = JSONEncoding.default
+    func getNextPlanetData(path:String? , success: @escaping ((_ planetData: PlanetsApiModel?) -> Void), faliure: (@escaping(_ error: Error?) -> Void)){
+        var url: String?
         
-        BaseService().callWebServiceAlamofire(request, success: { response in
-            let data = Mapper<PlanetsApiModel>().map(JSONObject: response)
-            success(data)
-        }, failure: { error in
-            faliure(error)
-        })
-    }
-    
-    func getNextPlanetData(path:String , success: @escaping ((_ planetData: PlanetsApiModel?) -> Void), faliure: (@escaping(_ error: Error?) -> Void)){
-        let url =  path.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-
+        if path != nil {
+            url =  path!.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+        } else {
+            url = ("\(Hosts.baseUrl.rawValue)/planets").addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+        }
+        
         var request: AlamofireRequestModal = AlamofireRequestModal()
         request.method = .get
         request.path = url!

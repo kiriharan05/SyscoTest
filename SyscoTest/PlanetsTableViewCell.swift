@@ -6,8 +6,19 @@
 //
 
 import UIKit
+import SDWebImage
 
 class PlanetsTableViewCell: UITableViewCell {
+    
+    var item : PlanetViewModel!{
+        didSet{
+            self.nameLabel.text = "Planet Name: " + item.planetsApiResultsModel.name!
+            self.climateLabel.text = "Climate: " + item.planetsApiResultsModel.climate!
+            let fileUrl = URL(string:"https://picsum.photos/200")
+            self.iconImageView.sd_setImage(with: fileUrl, completed: nil)
+            self.selectionStyle = .none
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,6 +41,8 @@ class PlanetsTableViewCell: UITableViewCell {
     override func layoutSubviews(){
         super.layoutSubviews()
         self.shadowPath(cornerRadius: 10, view: holderView)
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+
     }
     
     lazy var holderView: UIView = {
@@ -42,14 +55,15 @@ class PlanetsTableViewCell: UITableViewCell {
     lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
+        label.textAlignment = .left
+        
         return label
     }()
     
     lazy var climateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
+        label.textAlignment = .left
         return label
     }()
     
@@ -68,15 +82,15 @@ class PlanetsTableViewCell: UITableViewCell {
     }
     
     func setup() {
-        self.addSubview(holderView)
+        contentView.addSubview(holderView)
         holderView.addSubview(iconImageView)
         holderView.addSubview(nameLabel)
         holderView.addSubview(climateLabel)
         
-        holderView.centerXAnchor.constraint(equalTo: self.centerXAnchor,constant: 0).isActive = true
-        holderView.centerYAnchor.constraint(equalTo: self.centerYAnchor,constant: 0).isActive = true
-        holderView.widthAnchor.constraint(equalTo: self.widthAnchor,multiplier: 0.9).isActive = true
-        holderView.heightAnchor.constraint(equalTo: self.heightAnchor,constant: 0.7).isActive = true
+        holderView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor,constant: 0).isActive = true
+        holderView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor,constant: 0).isActive = true
+        holderView.widthAnchor.constraint(equalTo: contentView.widthAnchor,multiplier: 1).isActive = true
+        holderView.heightAnchor.constraint(equalTo: contentView.heightAnchor,constant: 0.9).isActive = true
         
         iconImageView.centerYAnchor.constraint(equalTo: holderView.centerYAnchor).isActive = true
         iconImageView.leadingAnchor.constraint(equalTo: holderView.leadingAnchor,constant: 10).isActive = true
